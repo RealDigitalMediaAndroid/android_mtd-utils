@@ -35,6 +35,7 @@ LOCAL_C_INCLUDES += /usr/include/
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/mkfs.ubifs/hashtable
 LOCAL_LDFLAGS += -L/usr/lib/x86_64-linux-gnu
 LOCAL_LDLIBS := -lz -llzo2 -lm -luuid -m64
+LOCAL_STATIC_LIBRARIES := libselinux
 LOCAL_MODULE := mkfs.ubifs
 LOCAL_MODULE_STEM := $(LOCAL_MODULE)_
 LOCAL_INSTALLED_MODULE_STEM := $(LOCAL_MODULE)
