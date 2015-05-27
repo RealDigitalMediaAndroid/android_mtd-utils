@@ -102,6 +102,25 @@ extern "C" {
 	fprintf(stderr, "%s: warning!: " fmt "\n", PROGRAM_NAME, ##__VA_ARGS__); \
 } while(0)
 
+#ifndef _SVID_SOURCE
+/**
+ * replacement for missing stdlib rpmatch()
+ * returns 1 if response starts with y or Y
+ * returns 0 if response starts with n or N
+ * returns -1 otherwise
+ */
+static inline int rpmatch(const char *response)
+{
+  if (response == NULL)
+    return -1;
+  if (toupper(response[0]) == 'Y')
+    return 1;
+  if (toupper(response[0]) == 'N')
+    return 0;
+  return -1;
+}
+#endif
+
 /**
  * prompt the user for confirmation
  */
