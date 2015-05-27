@@ -28,7 +28,9 @@
 #include <errno.h>
 #include <features.h>
 #include <inttypes.h>
-#include "version.h"
+#ifndef VERSION
+# include "version.h"
+#endif
 
 #ifndef PROGRAM_NAME
 # error "You must define PROGRAM_NAME before including this header"
