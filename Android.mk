@@ -1,9 +1,47 @@
 # Copyright 2009 The Android Open Source Project
 
 LOCAL_PATH:= $(call my-dir)
+# Need the include/version.h file or build step here
 VERSION := "\"1.5.1 (github.com/RealDigitalMedia/mtd-utils/tree/android)\""
 
-## Need the include/version.h file or build step here
+# mkfs.ubifs host command
+#
+ifneq ($(findstring x5.0,x$(PLATFORM_VERSION)), x5.0)
+
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := \
+	mkfs.ubifs/mkfs.ubifs.c \
+	mkfs.ubifs/crc16.c \
+	mkfs.ubifs/lpt.c \
+	mkfs.ubifs/compr.c \
+	mkfs.ubifs/devtable.c \
+	mkfs.ubifs/hashtable/hashtable.c \
+	mkfs.ubifs/hashtable/hashtable_itr.c
+# libubi
+LOCAL_SRC_FILES += ubi-utils/libubi.c
+# libmtd
+LOCAL_SRC_FILES += \
+	lib/libmtd.c \
+	lib/libmtd_legacy.c \
+	lib/libcrc32.c \
+	lib/libfec.c
+LOCAL_CC := /usr/bin/gcc
+LOCAL_CXX := /usr/bin/g++
+LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
+LOCAL_CFLAGS += -m64 -D_LARGEFILE64_SOURCE
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/ubi-utils/include
+LOCAL_C_INCLUDES += /usr/include/
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/mkfs.ubifs/hashtable
+LOCAL_LDFLAGS += -L/usr/lib/x86_64-linux-gnu
+LOCAL_LDLIBS := -lz -llzo2 -lm -luuid -m64
+LOCAL_MODULE := mkfs.ubifs
+LOCAL_MODULE_STEM := $(LOCAL_MODULE)_
+LOCAL_INSTALLED_MODULE_STEM := $(LOCAL_MODULE)
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_HOST_EXECUTABLE)
+
+endif
 
 # ubinize host command
 #
