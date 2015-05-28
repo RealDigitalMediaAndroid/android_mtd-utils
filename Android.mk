@@ -217,3 +217,43 @@ LOCAL_SHARED_LIBRARIES := libmtd
 LOCAL_MODULE := nandwrite
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_EXECUTABLE)
+
+
+####
+#### Static versions
+####
+
+# libmtd (static)
+#
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := \
+	lib/libmtd.c \
+	lib/libmtd_legacy.c \
+	lib/libcrc32.c \
+	lib/libfec.c
+LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_MODULE := libmtd
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_STATIC_LIBRARY)
+
+# flash_erase
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := flash_erase.c
+LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_STATIC_LIBRARIES := libmtd
+LOCAL_MODULE := flash_erase.static
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_EXECUTABLE)
+
+# nandwrite
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := nandwrite.c
+LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_STATIC_LIBRARIES := libmtd
+LOCAL_MODULE := nandwrite.static
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_EXECUTABLE)
+
