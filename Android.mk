@@ -65,6 +65,18 @@ LOCAL_MODULE := ubinize
 LOCAL_MODULE_TAGS := eng
 include $(BUILD_HOST_EXECUTABLE)
 
+# libubi (static)
+#
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := ubi-utils/libubi.c
+LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/ubi-utils/include
+LOCAL_MODULE := libubi
+LOCAL_MODULE_TAGS := optional
+include $(BUILD_STATIC_LIBRARY)
+
+
 # libubi (shared)
 #
 include $(CLEAR_VARS)
