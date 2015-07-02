@@ -254,9 +254,10 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := flash_erase.c
 LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
-LOCAL_STATIC_LIBRARIES := libmtd
+LOCAL_STATIC_LIBRARIES := libmtd libc
 LOCAL_MODULE := flash_erase.static
 LOCAL_MODULE_TAGS := optional
+LOCAL_FORCE_STATIC_EXECUTABLE := true
 include $(BUILD_EXECUTABLE)
 
 # nandwrite
@@ -264,8 +265,9 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := nandwrite.c
 LOCAL_CFLAGS = -O2 -Wall -Wextra -Wwrite-strings -Wno-sign-compare -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DVERSION=$(VERSION)
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
-LOCAL_STATIC_LIBRARIES := libmtd
+LOCAL_STATIC_LIBRARIES := libmtd libc
 LOCAL_MODULE := nandwrite.static
 LOCAL_MODULE_TAGS := optional
+LOCAL_FORCE_STATIC_EXECUTABLE := true
 include $(BUILD_EXECUTABLE)
 
